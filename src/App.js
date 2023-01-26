@@ -25,33 +25,30 @@ export default function App() {
   function handleAddInputChange(e) {
     setTodo(e.target.value);
   }
-
   function handleEditInputChange(e) {
     setCurrentTodo({ ...currentTodo, text: e.target.value });
-    console.log(currentTodo);
   }
-
   function handleAddFormSubmit(e) {
     e.preventDefault();
-    console.log("Date.now().toString(36) + Math.random().toString(36).substr(2)==>",Date.now().toString(36) + Math.random().toString(36).substr(2))
-    if (todo !== "") {
+    if (todo.trim() !== "") {
       setTodos([
         ...todos,
         {
-          id:Math.random().toString(20).substr(2),
+          id: Math.random().toString(20).substr(2),
           text: todo.trim(),
           date: new Date(),
         }
       ]);
     }
-
     setTodo("");
   }
 
   function handleEditFormSubmit(e) {
     e.preventDefault();
+    if (currentTodo.text.trim() !== "") {
+      handleUpdateTodo(currentTodo.id, currentTodo);
+    }
 
-    handleUpdateTodo(currentTodo.id, currentTodo);
   }
 
   function handleDeleteClick(id) {
@@ -114,12 +111,12 @@ export default function App() {
                   </tr>
                 </thead>
                 <tbody>
-                  {todos.map((todo,index) => (
+                  {todos.map((todo, index) => (
                     <TodoItem
                       key={index}
                       todo={todo}
                       onEditClick={handleEditClick}
-                      onDeleteClick={handleDeleteClick} 
+                      onDeleteClick={handleDeleteClick}
                     />
                   ))}
                 </tbody>
